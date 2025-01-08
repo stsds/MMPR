@@ -117,7 +117,7 @@ namespace mpcr {
 
             /**
              * @brief
-             * Delete a specific from the context manager.
+             * Delete a specific RunContext from the context manager.
              */
             void
             DeleteRunContext(size_t aIdx);

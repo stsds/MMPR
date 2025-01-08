@@ -172,11 +172,30 @@ RunContext::SetRunMode(const RunMode &aRunMode) {
 }
 
 void
-RunContext::FinalizeSyncOperations(){
+RunContext::FinalizeOperations(){
     if(this->mRunMode == RunMode::SYNC){
         this->Sync();
         this->FreeWorkBufferHost();
     }
+}
+
+void
+RunContext::FinalizeRunContext(){
+    this->Sync();
+    this->FreeWorkBufferHost();
+}
+
+void
+RunContext::FreeWorkBufferHost() const {
+    if (this->mOperationPlacement == definitions::GPU) {
+        this->Sync();
+        if (this->mpWorkBufferHost != nullptr) {
+            delete[] (char *) this->mpWorkBufferHost;
+        }
+    }
+    this->mWorkBufferSizeHost = 0;
+    this->mpWorkBufferHost = nullptr;
+
 }
 /** -------------------------- CUDA code -------------------------- **/
 
@@ -306,21 +325,6 @@ RunContext::FreeWorkBufferDevice() const {
     this->mWorkBufferSizeDevice = 0;
     this->mpWorkBufferDevice = nullptr;
 
-
-}
-
-
-void
-RunContext::FreeWorkBufferHost() const {
-
-    if (this->mOperationPlacement == definitions::GPU) {
-        this->Sync();
-        if (this->mpWorkBufferHost != nullptr) {
-            delete[] (char *) this->mpWorkBufferHost;
-        }
-    }
-    this->mWorkBufferSizeHost = 0;
-    this->mpWorkBufferHost = nullptr;
 
 }
 

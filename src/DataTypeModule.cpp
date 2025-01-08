@@ -192,7 +192,7 @@ RCPP_MODULE(MPCR) {
 
     /** Function to expose gemm , trmm, trsm , syrk **/
     function("MPCR.trmm", &RTrmm,
-             List::create(_[ "a" ], _[ "b" ] , _[ "c" ],
+             List::create(_[ "a" ], _[ "b" ] ,
                           _[ "lower_triangle" ] = false,
                           _[ "transpose_a" ] = false, _[ "lef_side" ] = true,
                           _[ "alpha" ] = 1));

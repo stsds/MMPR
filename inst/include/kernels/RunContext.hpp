@@ -137,7 +137,26 @@ namespace mpcr {
              */
 
             void
-            FinalizeSyncOperations();
+            FinalizeOperations();
+
+            /**
+             * @brief
+             * Cleans up and synchronizes resources.
+             *
+             * Frees the host work buffer and syncs the runContext.
+             */
+
+            void
+            FinalizeRunContext();
+
+
+            /**
+             * @brief
+             * Sync the stream and then free the allocated work buffer.
+             *
+             */
+            void
+            FreeWorkBufferHost() const;
 
 #ifdef USE_CUDA
 
@@ -221,14 +240,6 @@ namespace mpcr {
             void
             FreeWorkBufferDevice() const;
 
-            /**
-             * @brief
-             * Sync the stream and then free the allocated work buffer.
-             *
-             */
-            void
-            FreeWorkBufferHost() const;
-
         private:
 
             /**
@@ -250,12 +261,8 @@ namespace mpcr {
             int *mpInfo;
             /** GPU Work buffer needed for cublas/cusolver operations **/
             mutable void *mpWorkBufferDevice;
-            /** CPU Work buffer needed for cublas/cusolver operations **/
-            mutable void *mpWorkBufferHost;
             /** Work buffer size **/
             mutable size_t mWorkBufferSizeDevice;
-            /** Work buffer size **/
-            mutable size_t mWorkBufferSizeHost;
             /** cusolver handle **/
             cusolverDnHandle_t mCuSolverHandle;
             /** cublas handle **/
@@ -263,7 +270,11 @@ namespace mpcr {
             /** Cuda stream **/
             cudaStream_t mCudaStream;
 #endif
+            /** CPU Work buffer needed for cublas/cusolver operations **/
+            mutable void *mpWorkBufferHost;
             /** Enum indicating whether the operation is sync or async **/
+            /** Work buffer size **/
+            mutable size_t mWorkBufferSizeHost;
             RunMode mRunMode;
             /** Enum indicating whether the operation is done on GPU or CPU **/
             definitions::OperationPlacement mOperationPlacement;
