@@ -125,13 +125,14 @@ ContextManager::CreateRunContext() {
 
 void
 ContextManager::DeleteRunContext(size_t aIdx) {
-    auto deleted_Context = this->GetContext(aIdx);
+    auto deleted_context = this->GetContext(aIdx);
+    auto current_context = ContextManager::GetOperationContext();
     auto it = mpInstance->mContexts.find(aIdx);
     if (it != mpInstance->mContexts.end()) {
         // Erase the entry from the map
         mpInstance->mContexts.erase(it);
     }
-    delete deleted_Context;
+    delete deleted_context;
 }
 
 RunContext *

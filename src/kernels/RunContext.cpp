@@ -175,7 +175,9 @@ void
 RunContext::FinalizeOperations(){
     if(this->mRunMode == RunMode::SYNC){
         this->Sync();
+#ifdef USE_CUDA
         this->FreeWorkBufferHost();
+#endif
     }
 }
 
