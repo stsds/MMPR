@@ -56,7 +56,7 @@ run_backsolve_benchmark <- function(n, replication, times,operation_placement) {
   diag(b) <- runif(n, 0.1, 1)
 
   MPCR_double_b <- as.MPCR(b, n, n, precision = "double",operation_placement)
-  rm(U)
+  rm(b)
   gc()
 
   MPCR.SetOperationPlacement(operation_placement)

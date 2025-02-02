@@ -61,34 +61,13 @@ run_gemm_benchmark <- function(row, col, replication, times ,operation_placement
   print(benchmark(replications = rep(replication, times),
                   crossprod(MPCR_matrix_single_1, MPCR_matrix_single_2),
                   columns = c("test", "replications", "elapsed")))
-
-  MPCR_matrix_single_3 <- as.MPCR(matrix_2, row, col, "single",operation_placement)
-
-  cat("\n\n")
   cat("\n")
 
   MPCR_matrix_single_1$FreeGPU()
   MPCR_matrix_single_2$FreeGPU()
-  MPCR_matrix_single_3$FreeGPU()
 
   MPCR_matrix_single_1$FreeCPU()
   MPCR_matrix_single_2$FreeCPU()
-  MPCR_matrix_single_3$FreeCPU()
-
-  # --------------------------- Double ------------------------------------
-
-  MPCR_matrix_double_1 <- as.MPCR(matrix_1, row, col, "double",operation_placement)
-  MPCR_matrix_double_2 <- as.MPCR(matrix_2, col, row, "double",operation_placement)
-
-  MPCR.SetOperationPlacement(operation_placement)
-
-  cat("\n\n")
-  cat("Running crossprod benchmark with 2 input \n")
-  print(benchmark(replications = rep(replication, times),
-                  crossprod(MPCR_matrix_double_1, MPCR_matrix_double_2),
-                  columns = c("test", "replications", "elapsed")))
-
-  cat("\n")
 }
 
 # Define the arguments
