@@ -8,21 +8,24 @@ fi
 
 ABSOLUE_PATH=$(dirname $(realpath "$0"))
 
-row=(2875 5750 11500 23000 46000)
-col=(2875 5750 11500 23000 46000)
+row=(11250 15000 22500 33750)
+col=(11250 15000 22500 33750)
 
 op_placement="CPU"
 
 function run_MPCR_benchmark() {
-  Rscript ${ABSOLUE_PATH}/chol.R $1 $3 $4 $op_placement >>$5
-#  Rscript ${ABSOLUE_PATH}/crossprod.R $1 $2 $3 $4  $op_placement >>$5
-  Rscript ${ABSOLUE_PATH}/eigen.R $1 $3 $4  $op_placement >>$5
+  Rscript ${ABSOLUE_PATH}/chol_single.R $1 $3 $4 $op_placement >>$5
+  Rscript ${ABSOLUE_PATH}/chol_double.R $1 $3 $4 $op_placement >>$5
+  Rscript ${ABSOLUE_PATH}/crossprod_single.R $1 $2 $3 $4  $op_placement >>$5
+  Rscript ${ABSOLUE_PATH}/crossprod_double.R $1 $2 $3 $4  $op_placement >>$5
+#  Rscript ${ABSOLUE_PATH}/eigen.R $1 $3 $4  $op_placement >>$5
 #  Rscript ${ABSOLUE_PATH}/norm.R $1 $3 $4  $op_placement >>$5
-  Rscript ${ABSOLUE_PATH}/qr.R $1 $3 $4  $op_placement >>$5
+#  Rscript ${ABSOLUE_PATH}/qr.R $1 $3 $4  $op_placement >>$5
 #  Rscript ${ABSOLUE_PATH}/rcond.R $1 $2 $3 $4  $op_placement >>$5
 #  Rscript ${ABSOLUE_PATH}/solve.R $1 $3 $4  $op_placement >>$5
-#  Rscript ${ABSOLUE_PATH}/triangularsolve.R $1 $3 $4  $op_placement >>$5
- Rscript ${ABSOLUE_PATH}/svd.R $1 $3 $4  $op_placement >>$5
+  Rscript ${ABSOLUE_PATH}/triangularsolve_single.R $1 $3 $4  $op_placement >>$5
+  Rscript ${ABSOLUE_PATH}/triangularsolve_double.R $1 $3 $4  $op_placement >>$5
+# Rscript ${ABSOLUE_PATH}/svd.R $1 $3 $4  $op_placement >>$5
 }
 
 echo "Running MPCR CPU benchmark" >>$1
